@@ -6,6 +6,8 @@ var Indicator = function(config) {
   this.short = new EMA(config.short);
   this.long = new EMA(config.long);
   this.signal = new EMA(config.signal);
+  this.currentPrice = 0;
+  this.maxCandleToRunSize = config.maxCandleToRunSize;
 }
 
 Indicator.prototype.update = function(price) {
@@ -14,6 +16,7 @@ Indicator.prototype.update = function(price) {
   this.calculateEMAdiff();
   this.signal.update(this.diff);
   this.result = this.diff - this.signal.result;
+  this.currentPrice = price;
 }
 
 Indicator.prototype.calculateEMAdiff = function() {
